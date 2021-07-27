@@ -106,3 +106,6 @@ Next, I create a checkpoint to pair up the table with the Expectation Suite usin
 
 Change the `data_asset_name` to be the `sale` table that we want to validate and then run all cells in the Notebook.
 This should open up a Data Doc (if it's not already opened) and then we can see the validation results.
+
+However, I am not sure how to run validation **only** on the new rows of data that was inserted. Here, I am validating
+on the entire table, including the new row of data, which is inefficient and will take a lot of time if the table has many rows.
