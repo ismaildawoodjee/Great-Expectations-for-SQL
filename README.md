@@ -44,7 +44,8 @@ Inside the container, run
 
     psql -U postgres
 
-and type `\d` to list the populated tables. Quit the database using `\q`.
+and type `\d` to list the populated tables. Here, SQL queries can be written to explore the database, and add or remove rows
+from the tables. Quit the database using `\q`.
 
 ### Great Expectations Setup
 
@@ -85,4 +86,23 @@ when initially setting up the Postgres database:
 
     Just like the JSON and CSV evaluations, we can add/remove/change the Expectations within the Jupyter Notebook and
     inspect the Data Doc that is opened after running the last cell. Here, I just implemented some range checks for the `amount`
-    column, and ensured uniqueness and non-null values for the ID columns.
+    column, and ensured consistent type, uniqueness and non-null values for the ID columns. Rerun the Jupyter Notebook cells
+    after editing the Expectations and check out the newly generated Data Doc.
+
+## Validating New Data
+
+To validate a new batch of data, more data has to be first inserted into the `sale` table and then we can create a checkpoint
+to pair up new data with the edited Expectation Suite. I added a new row to the `sale` table that violates the expected
+`amount` range between [0,10,000]:
+
+    INSERT INTO public.sale(sale_id, amount, date_sale, product_id, user_id, store_id)
+    VALUES ('7914a1d1-5148-4d2a-93ef-aeb24687fc08', 10010.10, '2019-07-02 12:15:43.123456', 72, 20111, 43);
+
+Note that the only single quotes should be used in SQL, not double scripts.
+
+Next, I create a checkpoint to pair up the table with the Expectation Suite using the CLI command
+
+    great_expectations --v3-api checkpoint new sale_checkpoint
+
+Change the `data_asset_name` to be the `sale` table that we want to validate and then run all cells in the Notebook.
+This should open up a Data Doc (if it's not already opened) and then we can see the validation results.
