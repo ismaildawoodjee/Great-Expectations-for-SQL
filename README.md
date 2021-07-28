@@ -2,11 +2,19 @@
 
 ## Table of Contents
 
+- [Great Expectations with SQL](#great-expectations-with-sql)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Setup](#setup)
+    - [PostgresDB Setup](#postgresdb-setup)
+    - [Great Expectations Setup](#great-expectations-setup)
+  - [Validating New Data](#validating-new-data)
+
 ## Introduction
 
 Great Expectations (GE) makes use of SQLAlchemy together with the Python library appropriate for the specific flavour of SQL database
-that want to use. For example, if I want to connect GE to a PostgreSQL database, we will need the `sqlalchemy` and `psycopg2` libraries.
-GE will prompt the user to install them if they are note installed yet. The credentials for connecting to the SQL database will be
+that you want to use. For example, if we want to connect GE to a PostgreSQL database, we will need the `sqlalchemy` and `psycopg2` libraries.
+GE will prompt the user to install them if they are not installed yet. The credentials for connecting to the SQL database are
 specified in the `config_variables.yml` file in the `great_expectations/uncommitted` folder after configuring a Datasource.
 
 The data preparation step is described in the [PostgresDB Setup](#postgresdb-setup) section. I used a Docker container to host
